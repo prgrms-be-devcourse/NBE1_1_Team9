@@ -1,0 +1,34 @@
+[[order-create]]
+=== 주문 생성
+
+==== HTTP Request
+include::{snippets}/order-create/http-request.adoc[]
+include::{snippets}/order-create/request-fields.adoc[]
+
+==== HTTP Response
+include::{snippets}/order-create/http-response.adoc[]
+include::{snippets}/order-create/response-fields.adoc[]
+
+
+[[order-get]]
+=== 주문 단건 조회
+
+==== HTTP Request
+include::{snippets}/order-get/http-request.adoc[]
+include::{snippets}/order-get/path-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/order-get/http-response.adoc[]
+include::{snippets}/order-get/response-fields.adoc[]
+
+[[orders-get-by-email]]
+
+=== 이메일로 주문 목록 조회
+
+==== HTTP Request
+include::{snippets}/orders-get-by-email/http-request.adoc[]
+include::{snippets}/orders-get-by-email/query-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/orders-get-by-email/http-response.adoc[]
+include::{snippets}/orders-get-by-email/response-fields.adoc[]
