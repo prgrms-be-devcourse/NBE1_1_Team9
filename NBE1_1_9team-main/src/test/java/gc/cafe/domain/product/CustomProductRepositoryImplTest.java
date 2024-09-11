@@ -4,6 +4,9 @@ import gc.cafe.IntegrationTestSupport;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -82,6 +85,35 @@ class CustomProductRepositoryImplTest extends IntegrationTestSupport {
         assertThat(products).hasSize(2)
             .extracting("name","category","price","description")
             .containsExactlyInAnyOrder(
+                tuple("스타벅스 베이글", "베이커리", 5000L, "베이글"),
+                tuple("스타벅스 샌드위치", "베이커리", 4000L, "샌드위치")
+            );
+    }
+
+    @DisplayName("상품과 카테고리를 모두 입력 받은 경우 AND 연산으로 상품을 조회한다.")
+    @Test
+    void findAllProductWithPageable() {
+        //given
+        Product product1 = createProduct("스타벅스 원두", "원두", 50000L, "에티오피아산");
+        Product product2 = createProduct("스타벅스 라떼", "음료", 3000L, "에스프레소");
+        Product product3 = createProduct("스타벅스 베이글", "베이커리", 5000L, "베이글");
+        Product product4 = createProduct("스타벅스 샌드위치", "베이커리", 4000L, "샌드위치");
+
+        productRepository.saveAll(List.of(product1, product2, product3, product4));
+
+        Pageable pageable = PageRequest.of(0, 10);
+
+        //when
+        Page<Product> productPage = productRepository.findAll(pageable);
+
+        //then
+        assertThat(productPage.getTotalElements()).isEqualTo(4);
+        assertThat(productPage.getTotalPages()).isEqualTo(1);
+        assertThat(productPage.getContent()).hasSize(4)
+            .extracting("name","category","price","description")
+            .containsExactlyInAnyOrder(
+                tuple("스타벅스 원두", "원두", 50000L, "에티오피아산"),
+                tuple("스타벅스 라떼", "음료", 3000L, "에스프레소"),
                 tuple("스타벅스 베이글", "베이커리", 5000L, "베이글"),
                 tuple("스타벅스 샌드위치", "베이커리", 4000L, "샌드위치")
             );
