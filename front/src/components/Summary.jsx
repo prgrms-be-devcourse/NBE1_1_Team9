@@ -1,7 +1,7 @@
 import {SummaryItem} from "./SummaryItem";
 import React, {useState} from "react";
 
-export function Summary({items = [], onOrderSubmit}) {
+export function Summary({items = [], onOrderSubmit, reset}) {
   const totalPrice = items.reduce((prev, curr) => prev + (curr.price * curr.count), 0);
   const [order, setOrder] = useState({
     email: "", address: "", postcode: ""
@@ -22,7 +22,14 @@ export function Summary({items = [], onOrderSubmit}) {
         <h5 className="m-0 p-0"><b>Summary</b></h5>
       </div>
       <hr/>
-      {items.map(v => <SummaryItem key={v.productId} count={v.count} productName={v.productName}/>)}
+      {
+        items.map(v => 
+          <SummaryItem key={v.productId} count={v.count} productName={v.productName}/>
+        )
+      }
+      {
+        totalPrice > 0 ? <button className="btn btn-danger" onClick={() => reset()}>초기화</button> : null
+      }
       <form>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">이메일</label>

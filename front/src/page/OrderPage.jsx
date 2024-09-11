@@ -62,7 +62,7 @@ const OrderPage = () => {
           <ProductList products={products} onAddClick={handleAddClicked}/>
         </div>
         <div className="col-md-4 summary p-4">
-          <Summary items={items} onOrderSubmit={handleOrderSubmit}/>
+          <Summary items={items} onOrderSubmit={handleOrderSubmit} reset={() =>setItems([])}/>
         </div>
       </div>
     </div>

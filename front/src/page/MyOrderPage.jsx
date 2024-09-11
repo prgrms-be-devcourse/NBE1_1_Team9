@@ -14,7 +14,9 @@ const MyOrderPage = () => {
     const [email, setEmail] = useState('');
     const getOrderLog = (e) => {
         e.preventDefault();
-        axios.get(`?email=${email}`)
+        console.log(email);
+        
+        axios.get(`/orders?email=${email}`)
         .then(res => {
             console.log(res);
         })

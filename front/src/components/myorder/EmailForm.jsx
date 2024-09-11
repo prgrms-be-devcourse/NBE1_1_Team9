@@ -13,8 +13,6 @@ const StyledDiv = styled.div`
 `;
 const EmailForm = ({data, input, submit}) => {
   
-
-
   return (
     <div className='mb-3 d-flex justify-content-center'>
       <form onSubmit={(e) => submit(e)}>
