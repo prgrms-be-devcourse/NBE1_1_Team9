@@ -2,13 +2,13 @@ package gc.cafe.api.service.user.response;
 
 public class EmailResponse {
 
-    private final String name;
+    private final String value;
 
-    public EmailResponse(String name) {
-        this.name = name;
+    public EmailResponse(String value) {
+        this.value = value;
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 }
