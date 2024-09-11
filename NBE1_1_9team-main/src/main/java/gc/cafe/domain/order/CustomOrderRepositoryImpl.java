@@ -1,8 +1,9 @@
 package gc.cafe.domain.order;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import gc.cafe.domain.orderproduct.QOrderProduct;
-import gc.cafe.domain.product.QProduct;
+import static gc.cafe.domain.order.QOrder.order;
+import static gc.cafe.domain.orderproduct.QOrderProduct.orderProduct;
+import static gc.cafe.domain.product.QProduct.product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -16,9 +17,6 @@ public class CustomOrderRepositoryImpl implements CustomOrderRepository {
 
     @Override
     public List<Order> findByEmail(String email) {
-        QOrder order = QOrder.order;
-        QOrderProduct orderProduct = QOrderProduct.orderProduct;
-        QProduct product = QProduct.product;
         return jpaQueryFactory.select(order)
                 .from(order)
                 .join(order.orderProducts, orderProduct)
@@ -31,10 +29,6 @@ public class CustomOrderRepositoryImpl implements CustomOrderRepository {
 
     @Override
     public List<Order> findByOrderStatus(OrderStatus orderStatus) {
-        QOrder order = QOrder.order;
-        QOrderProduct orderProduct = QOrderProduct.orderProduct;
-        QProduct product = QProduct.product;
-
         return jpaQueryFactory.select(order)
                 .from(order)
                 .join(order.orderProducts, orderProduct)
