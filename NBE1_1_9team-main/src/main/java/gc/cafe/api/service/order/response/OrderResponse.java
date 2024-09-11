@@ -43,7 +43,6 @@ public class OrderResponse {
     private static Stream<OrderDetailResponse> getOrderDetailResponseStream(Order order) {
         return order.getOrderProducts().stream()
                 .map(orderProduct -> OrderDetailResponse.builder()
-                        .productName(orderProduct.getProduct().getName())
                         .category(orderProduct.getProduct().getCategory())
                         .price(orderProduct.getProduct().getPrice())
                         .quantity(orderProduct.getQuantity())

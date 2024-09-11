@@ -5,14 +5,12 @@ import lombok.Getter;
 
 @Getter
 public class OrderDetailResponse {
-    private String productName;
     private String category;
     private Long price;
     private int quantity;
 
     @Builder
-    private OrderDetailResponse(String productName, String category, Long price, int quantity) {
-        this.productName = productName;
+    private OrderDetailResponse(String category, Long price, int quantity) {
         this.category = category;
         this.price = price;
         this.quantity = quantity;
