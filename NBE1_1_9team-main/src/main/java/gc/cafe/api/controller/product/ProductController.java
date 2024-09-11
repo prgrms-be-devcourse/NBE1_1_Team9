@@ -7,6 +7,7 @@ import gc.cafe.api.service.product.ProductService;
 import gc.cafe.api.service.product.response.ProductResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -34,6 +35,11 @@ public class ProductController {
     @GetMapping("/{id}")
     public ApiResponse<ProductResponse> getProduct(@PathVariable Long id) {
         return ApiResponse.ok(productService.getProduct(id));
+    }
+
+    @GetMapping
+    public ApiResponse<Page<ProductResponse>> getProducts(@RequestParam(defaultValue = "1") int page) {
+        return ApiResponse.ok(productService.getProducts(page));
     }
 
 }
