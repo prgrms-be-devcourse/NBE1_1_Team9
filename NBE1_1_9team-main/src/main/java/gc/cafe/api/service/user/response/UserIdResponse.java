@@ -1,14 +1,5 @@
 package gc.cafe.api.service.user.response;
 
-public class UserIdResponse {
+public record UserIdResponse(Long userId) {
 
-    private Long userId;
-
-    public UserIdResponse(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
 }

@@ -33,7 +33,7 @@ public class UserController {
     @PostMapping("/login")
     public ApiResponse<TokenResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         EmailResponse email = userService.login(loginRequest.toAuthenticationToken());
-        return ApiResponse.ok(jwtService.toTokenResponse(email.getValue()));
+        return ApiResponse.ok(jwtService.toTokenResponse(email.value()));
     }
 
     @PostMapping("/logout")
@@ -47,7 +47,7 @@ public class UserController {
     @PostMapping("/reissue")
     public ApiResponse<TokenResponse> reIssueToken(@RequestParam("refreshToken") String refreshToken) {
         EmailResponse email = userService.reIssueToken(refreshToken);
-        return ApiResponse.ok(jwtService.toTokenResponse(email.getValue()));
+        return ApiResponse.ok(jwtService.toTokenResponse(email.value()));
     }
 
 }

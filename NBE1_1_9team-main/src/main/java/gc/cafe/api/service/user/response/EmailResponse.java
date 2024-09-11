@@ -1,14 +1,5 @@
 package gc.cafe.api.service.user.response;
 
-public class EmailResponse {
+public record EmailResponse(String value) {
 
-    private final String value;
-
-    public EmailResponse(String value) {
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
-    }
 }

@@ -27,14 +27,14 @@ public class UserService {
     @Transactional
     public UserIdResponse join(JoinServiceRequest joinRequest) {
         checkEmail(joinRequest);
-        User user = new User(joinRequest.getEmail(), joinRequest.getPassword(), joinRequest.getName());
+        User user = new User(joinRequest.email(), joinRequest.password(), joinRequest.name());
         user.encodePassword(passwordEncoder);
         User savedUser = userRepository.save(user);
         return new UserIdResponse(savedUser.getId());
     }
 
     private void checkEmail(JoinServiceRequest joinRequest) {
-        if (userRepository.existsByEmail(joinRequest.getEmail())) {
+        if (userRepository.existsByEmail(joinRequest.email())) {
             throw new IllegalArgumentException("해당 이메일은 이미 존재합니다.");
         }
     }
