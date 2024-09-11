@@ -1,19 +1,17 @@
 package gc.cafe.domain.product;
 
-import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 
-import static gc.cafe.domain.product.QProduct.*;
+import static gc.cafe.domain.product.QProduct.product;
 
 @RequiredArgsConstructor
 public class CustomProductRepositoryImpl implements CustomProductRepository {
@@ -44,7 +42,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
     }
 
     @Override
-    public Page<Product> findAll(Pageable pageable) {
+    public Page<Product> findAllUsingQueryDsl(Pageable pageable) {
         List<Product> products = queryFactory
             .selectFrom(product)
             .orderBy(product.id.desc())

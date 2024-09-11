@@ -19,5 +19,5 @@ public interface ProductService {
 
     List<ProductResponse> getProductByNameOrCategory(ProductSearchServiceRequest request);
 
-    Page<ProductResponse> getProducts(int page, int size);
+    Page<ProductResponse> getProducts(int page);
 }

@@ -9,5 +9,5 @@ public interface CustomProductRepository {
 
     List<Product> findProductByNameOrCategory(String name, String category);
 
-    Page<Product> findAll(Pageable pageable);
+    Page<Product> findAllUsingQueryDsl(Pageable pageable);
 }

@@ -92,7 +92,7 @@ class CustomProductRepositoryImplTest extends IntegrationTestSupport {
 
     @DisplayName("상품과 카테고리를 모두 입력 받은 경우 AND 연산으로 상품을 조회한다.")
     @Test
-    void findAllProductWithPageable() {
+    void findAllUsingQueryDslProductWithPageable() {
         //given
         Product product1 = createProduct("스타벅스 원두", "원두", 50000L, "에티오피아산");
         Product product2 = createProduct("스타벅스 라떼", "음료", 3000L, "에스프레소");

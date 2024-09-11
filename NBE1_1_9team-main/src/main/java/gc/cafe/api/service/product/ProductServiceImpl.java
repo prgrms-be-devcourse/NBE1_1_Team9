@@ -7,6 +7,9 @@ import gc.cafe.api.service.product.response.ProductResponse;
 import gc.cafe.domain.product.Product;
 import gc.cafe.domain.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +21,8 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+
+    private final int PAGE_SIZE = 10;
 
     @Override
     public ProductResponse createProduct(ProductCreateServiceRequest request) {
@@ -53,6 +58,13 @@ public class ProductServiceImpl implements ProductService {
         return products.stream()
             .map(ProductResponse::of)
             .toList();
+    }
+
+    @Override
+    public Page<ProductResponse> getProducts(int page) {
+        Pageable pageable = PageRequest.of(page-1,PAGE_SIZE);
+        Page<Product> products = productRepository.findAllUsingQueryDsl(pageable);
+        return products.map(ProductResponse::of);
     }
 
     private Product getProductById(Long id) {

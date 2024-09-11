@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -269,6 +270,57 @@ class ProductServiceImplTest extends IntegrationTestSupport {
 
         //then
         assertThat(response).isEmpty();
+    }
+
+    @DisplayName("페이지 번호를 입력 받아 상품 리스트를 조회한다.")
+    @Test
+    void getProducts() {
+        //given
+        Product product1 = createProduct("스타벅스 원두", "원두", 50000L, "에티오피아산");
+        Product product2 = createProduct("스타벅스 라떼", "음료", 3000L, "에스프레소");
+        Product product3 = createProduct("스타벅스 베이글", "베이커리", 5000L, "베이글");
+        Product product4 = createProduct("스타벅스 샌드위치", "베이커리", 4000L, "샌드위치");
+
+        productRepository.saveAll(List.of(product1, product2, product3, product4));
+
+        //when
+        Page<ProductResponse> response = productService.getProducts(1);
+
+        //then
+        assertThat(response.getTotalPages()).isEqualTo(1);
+
+        assertThat(response.getTotalElements()).isEqualTo(4);
+
+        assertThat(response.getContent()).hasSize(4)
+            .extracting("name", "category", "price", "description")
+            .containsExactlyInAnyOrder(
+                tuple("스타벅스 원두", "원두", 50000L, "에티오피아산"),
+                tuple("스타벅스 라떼", "음료", 3000L, "에스프레소"),
+                tuple("스타벅스 베이글", "베이커리", 5000L, "베이글"),
+                tuple("스타벅스 샌드위치", "베이커리", 4000L, "샌드위치")
+            );
+    }
+
+    @DisplayName("페이지 번호를 입력 받아 상품 리스트를 조회한다.")
+    @Test
+    void getProductsOutOfPage() {
+        //given
+        Product product1 = createProduct("스타벅스 원두", "원두", 50000L, "에티오피아산");
+        Product product2 = createProduct("스타벅스 라떼", "음료", 3000L, "에스프레소");
+        Product product3 = createProduct("스타벅스 베이글", "베이커리", 5000L, "베이글");
+        Product product4 = createProduct("스타벅스 샌드위치", "베이커리", 4000L, "샌드위치");
+
+        productRepository.saveAll(List.of(product1, product2, product3, product4));
+
+        //when
+        Page<ProductResponse> response = productService.getProducts(2);
+
+        //then
+        assertThat(response.getTotalPages()).isEqualTo(1);
+
+        assertThat(response.getTotalElements()).isEqualTo(4);
+
+        assertThat(response.getContent()).isEmpty();
     }
 
 
