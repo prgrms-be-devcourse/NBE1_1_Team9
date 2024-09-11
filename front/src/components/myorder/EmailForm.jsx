@@ -11,24 +11,22 @@ const StyledDiv = styled.div`
         margin: 1em;
     }
 `;
-const EmailForm = () => {
-  const [email, setEmail] = useState('');
+const EmailForm = ({data, input, submit}) => {
   
-  const getOrdersLog = () => {
 
-  }
 
   return (
     <div className='mb-3 d-flex justify-content-center'>
-      <form onSubmit={(e) => getOrdersLog(e)}>
+      <form onSubmit={(e) => submit(e)}>
         <StyledDiv>
+            <h5>이메일로 주문 조회하기</h5>
             <input 
                 type="email" 
                 className="form-control w-50" 
                 id="email" name='email'
                 placeholder="이메일을 입력하세요" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={data}
+                onChange={(e) => input(e.target.value)}
             />
             <button type="submit" className="btn btn-dark">주문 검색</button>
         </StyledDiv>

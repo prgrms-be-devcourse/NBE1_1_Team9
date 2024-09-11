@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import "../../App.css"
 import React from 'react'
 import styled from "styled-components"
 
 
-const StyledLink = styled(Link)`
+const StyledNavLink = styled(NavLink)`
     text-decoration: none;
     color: #333333;
     margin: 2em 0;
@@ -13,6 +13,12 @@ const StyledLink = styled(Link)`
 
     &:hover {
         color: #111111;
+    }
+
+    &.active {
+        color: #ffffff; /* 활성화된 링크의 색상 */
+        background-color: #111111;
+        padding: 0.3em;
     }
 `;
 
@@ -24,17 +30,18 @@ const Header = () => {
     <div className="row justify-content-center m-4">
       <h1 className="text-center d-inline">Grids & Circle</h1>
       <div className="w-75">
-        <StyledLink 
+        <StyledNavLink 
             to='/'
             className={({ isActive }) => (isActive ? 'active' : '')}
         >
             상품 주문하러 이동하기
-        </StyledLink>
-        <StyledLink 
+        </StyledNavLink>
+        <StyledNavLink 
             to='/myOrder'
+            className={({ isActive }) => (isActive ? 'active' : '')}
         >
             내 주문 조회하기
-        </StyledLink>
+        </StyledNavLink>
       </div>
     </div>
   )

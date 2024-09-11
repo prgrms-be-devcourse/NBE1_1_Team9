@@ -24,7 +24,11 @@ const OrderPage = () => {
       useEffect(() => {
         console.log(process.env.REACT_APP_SERVER_IP);
         axios.get('/products')
-          .then(v => setProducts(v.data));
+          .then(v => setProducts(v.data))
+          .catch(err => {
+            alert('데이터 목록 조회 실패');
+            console.log(err);
+        });
       }, []);
     
       const handleOrderSubmit = (order) => {
