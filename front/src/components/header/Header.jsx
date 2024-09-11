@@ -1,0 +1,43 @@
+import { Link } from "react-router-dom"
+import "../../App.css"
+import React from 'react'
+import styled from "styled-components"
+
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: #333333;
+    margin: 2em 0;
+    padding: 1em;
+    font-size: 1.1em;
+
+    &:hover {
+        color: #111111;
+    }
+`;
+
+//로그인 관련 컨테이너 추가
+const Header = () => {
+
+
+  return (
+    <div className="row justify-content-center m-4">
+      <h1 className="text-center d-inline">Grids & Circle</h1>
+      <div className="w-75">
+        <StyledLink 
+            to='/'
+            className={({ isActive }) => (isActive ? 'active' : '')}
+        >
+            상품 주문하러 이동하기
+        </StyledLink>
+        <StyledLink 
+            to='/myOrder'
+        >
+            내 주문 조회하기
+        </StyledLink>
+      </div>
+    </div>
+  )
+}
+
+export default Header
