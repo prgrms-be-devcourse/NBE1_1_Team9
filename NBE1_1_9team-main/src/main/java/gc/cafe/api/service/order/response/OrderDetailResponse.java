@@ -5,7 +5,6 @@ import lombok.Getter;
 
 @Getter
 public class OrderDetailResponse {
-
     private String category;
     private Long price;
     private int quantity;
