@@ -10,6 +10,8 @@ const OrderPage = () => {
         {productId: 'uuid-3', productName: '콜롬비아 커피 3', category: '커피빈', price: 5000},
       ]);
       const [items, setItems] = useState([]);
+      const [isFetching, setFetching] = useState(false);
+      const [page, setPage] = useState(1);
       const handleAddClicked = productId => {
         const product = products.find(v => v.productId === productId);
         const found = items.find(v => v.productId === productId);
@@ -23,18 +25,31 @@ const OrderPage = () => {
       
       useEffect(() => {
         console.log(process.env.REACT_APP_SERVER_IP);
-        axios.get('/products')
-          .then(v => setProducts(v.data))
+        axios.get(`/products?page=${page}`)
+          .then(res => {
+            if(res.status !== 200) {
+                throw res.data;
+            }
+            return res.data;
+        })
+        .then(data => {
+            console.log(data);
+        })
           .catch(err => {
             alert('데이터 목록 조회 실패');
             console.log(err);
         });
-      }, []);
+      }, [page]);
     
       const handleOrderSubmit = (order) => {
         if (items.length === 0) {
           alert("아이템을 추가해 주세요!");
         } else {
+            if(isFetching) {
+                alert('잠시만 기다려주세요.');
+                return;
+            }
+            setFetching(true);
           axios.post('/orders', {
             email: order.email,
             address: order.address,
@@ -51,6 +66,9 @@ const OrderPage = () => {
               alert("서버 장애");
               console.error(e);
             })
+            .finally( 
+                setFetching(false)
+            );
         }
       }
 
@@ -62,7 +80,7 @@ const OrderPage = () => {
           <ProductList products={products} onAddClick={handleAddClicked}/>
         </div>
         <div className="col-md-4 summary p-4">
-          <Summary items={items} onOrderSubmit={handleOrderSubmit} reset={() =>setItems([])}/>
+          <Summary items={items} onOrderSubmit={handleOrderSubmit} reset={() =>setItems()}/>
         </div>
       </div>
     </div>

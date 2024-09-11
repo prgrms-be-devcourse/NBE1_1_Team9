@@ -2,7 +2,17 @@ import { Link, NavLink } from "react-router-dom"
 import "../../App.css"
 import React from 'react'
 import styled from "styled-components"
+import UserContainer from "../user/UserContainer";
 
+
+const StyledHeader = styled.div`
+    margin-top: 3em;
+
+    & > div {
+        margin-top: 2em;
+        margin-bottom: 2em;
+    }
+`; 
 
 const StyledNavLink = styled(NavLink)`
     text-decoration: none;
@@ -27,23 +37,26 @@ const Header = () => {
 
 
   return (
-    <div className="row justify-content-center m-4">
+    <StyledHeader className="row justify-content-center m-4">
       <h1 className="text-center d-inline">Grids & Circle</h1>
-      <div className="w-75">
-        <StyledNavLink 
-            to='/'
-            className={({ isActive }) => (isActive ? 'active' : '')}
-        >
-            상품 주문하러 이동하기
-        </StyledNavLink>
-        <StyledNavLink 
-            to='/myOrder'
-            className={({ isActive }) => (isActive ? 'active' : '')}
-        >
-            내 주문 조회하기
-        </StyledNavLink>
+      <div className="w-75 d-flex justify-content-between">
+        <div>
+            <StyledNavLink 
+                to='/'
+                className={({ isActive }) => (isActive ? 'active' : '')}
+            >
+                상품 주문하러 이동하기
+            </StyledNavLink>
+            <StyledNavLink 
+                to='/myOrder'
+                className={({ isActive }) => (isActive ? 'active' : '')}
+            >
+                내 주문 조회하기
+            </StyledNavLink>
+        </div>
+        <UserContainer/>
       </div>
-    </div>
+    </StyledHeader>
   )
 }
 

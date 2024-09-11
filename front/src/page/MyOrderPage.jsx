@@ -12,17 +12,33 @@ const MyOrderPage = () => {
 
     const [orders, setOrders] = useState([]);
     const [email, setEmail] = useState('');
+    const [isFetching, setFetching] = useState(false);
+
     const getOrderLog = (e) => {
         e.preventDefault();
         console.log(email);
+
+        if(!email) {
+            alert('아메일을 입력하세요.')
+            return;
+        }
+
+        if(isFetching) {
+            alert('잠시만 기다려주세요.')
+            return;
+        }
         
+        setFetching(true);
         axios.get(`/orders?email=${email}`)
         .then(res => {
             console.log(res);
         })
         .catch(err => {
             console.log(err);
-        });
+        })
+        .finally( 
+            setFetching(false)
+        );
     }
 
   return (
