@@ -9,11 +9,14 @@ import gc.cafe.api.service.product.response.ProductResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -21,7 +24,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class ProductControllerTest extends ControllerTestSupport {
 
+
     @DisplayName("신규 상품을 등록한다.")
+    @WithMockUser
     @Test
     void createProduct() throws Exception {
         ProductCreateRequest request = ProductCreateRequest.builder()
@@ -41,7 +46,7 @@ class ProductControllerTest extends ControllerTestSupport {
                 .build());
 
         mockMvc.perform(
-                post("/api/v1/products")
+                post("/api/v1/products").with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -59,6 +64,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 상품을 등록 할 때 이름은 필수값이다.")
+    @WithMockUser
     @Test
     void createProductWithoutName() throws Exception {
         ProductCreateRequest request = ProductCreateRequest.builder()
@@ -68,7 +74,7 @@ class ProductControllerTest extends ControllerTestSupport {
             .build();
 
         mockMvc.perform(
-                post("/api/v1/products")
+                post("/api/v1/products").with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -81,6 +87,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 상품을 등록 할 때 이름은 최대 20자이다.")
+    @WithMockUser
     @Test
     void createProductWhenNameLengthIsOver20() throws Exception {
         ProductCreateRequest request = ProductCreateRequest.builder()
@@ -91,7 +98,7 @@ class ProductControllerTest extends ControllerTestSupport {
             .build();
 
         mockMvc.perform(
-                post("/api/v1/products")
+                post("/api/v1/products").with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -104,6 +111,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 상품을 등록 할 때 이름은 최대 20자이다.")
+    @WithMockUser
     @Test
     void createProductWhenNameLengthIs20() throws Exception {
         ProductCreateRequest request = ProductCreateRequest.builder()
@@ -123,7 +131,7 @@ class ProductControllerTest extends ControllerTestSupport {
                 .build());
 
         mockMvc.perform(
-                post("/api/v1/products")
+                post("/api/v1/products").with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -141,6 +149,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 상품을 등록 할 때 카테고리는 필수값이다.")
+    @WithMockUser
     @Test
     void createProductWithoutCategory() throws Exception {
         ProductCreateRequest request = ProductCreateRequest.builder()
@@ -150,7 +159,7 @@ class ProductControllerTest extends ControllerTestSupport {
             .build();
 
         mockMvc.perform(
-                post("/api/v1/products")
+                post("/api/v1/products").with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -163,6 +172,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 상품을 등록 할 때 카테고리의 길이는 최대 50자이다.")
+    @WithMockUser
     @Test
     void createProductWhenCategoryLengthIs50() throws Exception {
         ProductCreateRequest request = ProductCreateRequest.builder()
@@ -182,7 +192,7 @@ class ProductControllerTest extends ControllerTestSupport {
                 .build());
 
         mockMvc.perform(
-                post("/api/v1/products")
+                post("/api/v1/products").with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -200,6 +210,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 상품을 등록 할 때 카테고리의 길이는 최대 50자이다.")
+    @WithMockUser
     @Test
     void createProductWhenCategoryLengthIsOver50() throws Exception {
         ProductCreateRequest request = ProductCreateRequest.builder()
@@ -210,7 +221,7 @@ class ProductControllerTest extends ControllerTestSupport {
             .build();
 
         mockMvc.perform(
-                post("/api/v1/products")
+                post("/api/v1/products").with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -223,6 +234,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 상품을 등록 할 때 상품 설명은 필수값이다.")
+    @WithMockUser
     @Test
     void createProductWithoutDescription() throws Exception {
         ProductCreateRequest request = ProductCreateRequest.builder()
@@ -232,7 +244,7 @@ class ProductControllerTest extends ControllerTestSupport {
             .build();
 
         mockMvc.perform(
-                post("/api/v1/products")
+                post("/api/v1/products").with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -245,6 +257,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 상품을 등록 할 때 상품 설명의 길이는 최대 500자이다.")
+    @WithMockUser
     @Test
     void createProductWhenDescriptionLengthIs500() throws Exception {
         ProductCreateRequest request = ProductCreateRequest.builder()
@@ -264,7 +277,7 @@ class ProductControllerTest extends ControllerTestSupport {
                 .build());
 
         mockMvc.perform(
-                post("/api/v1/products")
+                post("/api/v1/products").with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -282,6 +295,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 상품을 등록 할 때 상품 설명의 길이는 최대 500자이다")
+    @WithMockUser
     @Test
     void createProductWhenDescriptionLengthIsOver500() throws Exception {
         ProductCreateRequest request = ProductCreateRequest.builder()
@@ -292,7 +306,7 @@ class ProductControllerTest extends ControllerTestSupport {
             .build();
 
         mockMvc.perform(
-                post("/api/v1/products")
+                post("/api/v1/products").with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -305,6 +319,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 상품을 등록 할 때 가격은 필수값이다.")
+    @WithMockUser
     @Test
     void createProductWithoutPrice() throws Exception {
         ProductCreateRequest request = ProductCreateRequest.builder()
@@ -314,7 +329,7 @@ class ProductControllerTest extends ControllerTestSupport {
             .build();
 
         mockMvc.perform(
-                post("/api/v1/products")
+                post("/api/v1/products").with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -327,6 +342,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 상품을 등록 할 때 상품 가격은 양수이어야 한다.")
+    @WithMockUser
     @Test
     void createProductWhenPriceIsOverZero() throws Exception {
         ProductCreateRequest request = ProductCreateRequest.builder()
@@ -346,7 +362,7 @@ class ProductControllerTest extends ControllerTestSupport {
                 .build());
 
         mockMvc.perform(
-                post("/api/v1/products")
+                post("/api/v1/products").with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -364,6 +380,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 상품을 등록 할 때 상품 가격은 0이 아니어야 한다.")
+    @WithMockUser
     @Test
     void createProductWhenPriceIsZero() throws Exception {
         ProductCreateRequest request = ProductCreateRequest.builder()
@@ -374,7 +391,7 @@ class ProductControllerTest extends ControllerTestSupport {
             .build();
 
         mockMvc.perform(
-                post("/api/v1/products")
+                post("/api/v1/products").with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -387,6 +404,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("상품 ID를 통해 상품에 대한 상세정보를 조회한다.")
+    @WithMockUser
     @Test
     void getProductByProductId() throws Exception {
         //given
@@ -420,6 +438,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("상품 ID를 통해 해당 상품을 삭제한다.")
+    @WithMockUser
     @Test
     void deleteProductByProductId() throws Exception {
         //given
@@ -430,7 +449,7 @@ class ProductControllerTest extends ControllerTestSupport {
 
         //when
         //then
-        mockMvc.perform(delete("/api/v1/products/{id}", id)
+        mockMvc.perform(delete("/api/v1/products/{id}", id).with(csrf())
                 .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isOk())
@@ -441,6 +460,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("상품 ID를 통해 상품정보를 변경한다.")
+    @WithMockUser
     @Test
     void updateProduct() throws Exception {
         Long productId = 1L;
@@ -462,7 +482,7 @@ class ProductControllerTest extends ControllerTestSupport {
                 .build());
 
         mockMvc.perform(
-                put("/api/v1/products/{id}", productId)
+                put("/api/v1/products/{id}", productId).with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -480,6 +500,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("상품 ID를 통해 상품정보를 변경 할 때 이름은 필수값이다.")
+    @WithMockUser
     @Test
     void updateProductWithoutName() throws Exception {
         Long productId = 1L;
@@ -491,7 +512,7 @@ class ProductControllerTest extends ControllerTestSupport {
             .build();
 
         mockMvc.perform(
-                put("/api/v1/products/{id}", productId)
+                put("/api/v1/products/{id}", productId).with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -504,6 +525,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("상품 ID를 통해 상품정보를 변경 할 때 이름은 최대 20자이다.")
+    @WithMockUser
     @Test
     void updateProductWhenNameLengthIsOver20() throws Exception {
         Long productId = 1L;
@@ -516,7 +538,7 @@ class ProductControllerTest extends ControllerTestSupport {
             .build();
 
         mockMvc.perform(
-                put("/api/v1/products/{id}", productId)
+                put("/api/v1/products/{id}", productId).with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -529,6 +551,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("상품 ID를 통해 상품정보를 변경 할 때 이름은 최대 20자이다.")
+    @WithMockUser
     @Test
     void updateProductWhenNameLengthIs20() throws Exception {
         Long productId = 1L;
@@ -550,7 +573,7 @@ class ProductControllerTest extends ControllerTestSupport {
                 .build());
 
         mockMvc.perform(
-                put("/api/v1/products/{id}", productId)
+                put("/api/v1/products/{id}", productId).with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -568,6 +591,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("상품 ID를 통해 상품정보를 변경 할 때 카테고리는 필수값이다.")
+    @WithMockUser
     @Test
     void updateProductWithoutCategory() throws Exception {
         Long productId = 1L;
@@ -579,7 +603,7 @@ class ProductControllerTest extends ControllerTestSupport {
             .build();
 
         mockMvc.perform(
-                put("/api/v1/products/{id}", productId)
+                put("/api/v1/products/{id}", productId).with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -592,6 +616,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("상품 ID를 통해 상품정보를 변경 할 때 카테고리의 길이는 최대 50자이다.")
+    @WithMockUser
     @Test
     void updateProductWhenCategoryLengthIs50() throws Exception {
         Long productId = 1L;
@@ -613,7 +638,7 @@ class ProductControllerTest extends ControllerTestSupport {
                 .build());
 
         mockMvc.perform(
-                put("/api/v1/products/{id}", productId)
+                put("/api/v1/products/{id}", productId).with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -631,6 +656,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("상품 ID를 통해 상품정보를 변경 할 때 카테고리의 길이는 최대 50자이다.")
+    @WithMockUser
     @Test
     void updateProductWhenCategoryLengthIsOver50() throws Exception {
         Long productId = 1L;
@@ -643,7 +669,7 @@ class ProductControllerTest extends ControllerTestSupport {
             .build();
 
         mockMvc.perform(
-                put("/api/v1/products/{id}", productId)
+                put("/api/v1/products/{id}", productId).with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -656,6 +682,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("상품 ID를 통해 상품정보를 변경 할 때 상품 설명은 필수값이다.")
+    @WithMockUser
     @Test
     void updateProductWithoutDescription() throws Exception {
         Long productId = 1L;
@@ -667,7 +694,7 @@ class ProductControllerTest extends ControllerTestSupport {
             .build();
 
         mockMvc.perform(
-                put("/api/v1/products/{id}", productId)
+                put("/api/v1/products/{id}", productId).with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -680,6 +707,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("상품 ID를 통해 상품정보를 변경 할 때 상품 설명의 길이는 최대 500자이다.")
+    @WithMockUser
     @Test
     void updateProductWhenDescriptionLengthIs500() throws Exception {
         Long productId = 1L;
@@ -701,7 +729,7 @@ class ProductControllerTest extends ControllerTestSupport {
                 .build());
 
         mockMvc.perform(
-                put("/api/v1/products/{id}", productId)
+                put("/api/v1/products/{id}", productId).with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -719,6 +747,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("상품 ID를 통해 상품정보를 변경 할 때 상품 설명의 길이는 최대 500자이다")
+    @WithMockUser
     @Test
     void updateProductWhenDescriptionLengthIsOver500() throws Exception {
         Long productId = 1L;
@@ -731,7 +760,7 @@ class ProductControllerTest extends ControllerTestSupport {
             .build();
 
         mockMvc.perform(
-                put("/api/v1/products/{id}", productId)
+                put("/api/v1/products/{id}", productId).with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -744,6 +773,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("상품 ID를 통해 상품정보를 변경 할 때 가격은 필수값이다.")
+    @WithMockUser
     @Test
     void updateProductWithoutPrice() throws Exception {
         Long productId = 1L;
@@ -755,7 +785,7 @@ class ProductControllerTest extends ControllerTestSupport {
             .build();
 
         mockMvc.perform(
-                put("/api/v1/products/{id}", productId)
+                put("/api/v1/products/{id}", productId).with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -768,6 +798,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("상품 ID를 통해 상품정보를 변경 할 때 상품 가격은 양수이어야 한다.")
+    @WithMockUser
     @Test
     void updateProductWhenPriceIsOverZero() throws Exception {
         Long productId = 1L;
@@ -789,7 +820,7 @@ class ProductControllerTest extends ControllerTestSupport {
                 .build());
 
         mockMvc.perform(
-                put("/api/v1/products/{id}", productId)
+                put("/api/v1/products/{id}", productId).with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -807,6 +838,7 @@ class ProductControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("상품 ID를 통해 상품정보를 변경 할 때 상품 가격은 0이 아니어야 한다.")
+    @WithMockUser
     @Test
     void updateProductWhenPriceIsZero() throws Exception {
         Long productId = 1L;
@@ -819,7 +851,7 @@ class ProductControllerTest extends ControllerTestSupport {
             .build();
 
         mockMvc.perform(
-                put("/api/v1/products/{id}", productId)
+                put("/api/v1/products/{id}", productId).with(csrf())
                     .content(objectMapper.writeValueAsString(request))
                     .contentType(MediaType.APPLICATION_JSON)
             )

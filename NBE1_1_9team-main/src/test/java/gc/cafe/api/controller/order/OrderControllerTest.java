@@ -3,12 +3,14 @@ package gc.cafe.api.controller.order;
 import gc.cafe.ControllerTestSupport;
 import gc.cafe.api.controller.order.request.OrderCreateRequest;
 import gc.cafe.api.controller.order.request.OrderProductQuantity;
+import gc.cafe.api.controller.product.ProductController;
 import gc.cafe.api.service.order.request.OrderCreateServiceRequest;
 import gc.cafe.api.service.order.response.OrderDetailResponse;
 import gc.cafe.api.service.order.response.OrderResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,6 +28,7 @@ class OrderControllerTest extends ControllerTestSupport {
 
 
     @DisplayName("신규 주문을 생성한다.")
+    @WithMockUser
     @Test
     void createOrder() throws Exception {
         OrderCreateRequest request = OrderCreateRequest.builder()
@@ -70,7 +74,7 @@ class OrderControllerTest extends ControllerTestSupport {
                     .build());
 
         mockMvc.perform(
-                post("/api/v1/orders")
+                post("/api/v1/orders").with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)
                     ))
@@ -95,6 +99,7 @@ class OrderControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 주문을 생성 할 때 이메일은 이메일 형식이어야 한다.")
+    @WithMockUser
     @Test
     void createOrderWithEmailForm() throws Exception {
         OrderCreateRequest request = OrderCreateRequest.builder()
@@ -117,7 +122,7 @@ class OrderControllerTest extends ControllerTestSupport {
 
 
         mockMvc.perform(
-                post("/api/v1/orders")
+                post("/api/v1/orders").with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)
                     ))
@@ -130,6 +135,7 @@ class OrderControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 주문을 생성 할 때 이메일은 필수값이다.")
+    @WithMockUser
     @Test
     void createOrderWithoutEmail() throws Exception {
         OrderCreateRequest request = OrderCreateRequest.builder()
@@ -151,7 +157,7 @@ class OrderControllerTest extends ControllerTestSupport {
 
 
         mockMvc.perform(
-                post("/api/v1/orders")
+                post("/api/v1/orders").with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)
                     ))
@@ -164,6 +170,7 @@ class OrderControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 주문을 생성 할 때 이메일은 50자 이하여야 한다.")
+    @WithMockUser
     @Test
     void createOrderWhenEmailLengthIsOver50() throws Exception {
         OrderCreateRequest request = OrderCreateRequest.builder()
@@ -186,7 +193,7 @@ class OrderControllerTest extends ControllerTestSupport {
 
 
         mockMvc.perform(
-                post("/api/v1/orders")
+                post("/api/v1/orders").with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)
                     ))
@@ -198,7 +205,9 @@ class OrderControllerTest extends ControllerTestSupport {
             .andExpect(jsonPath("$.data").isEmpty());
     }
 
+
     @DisplayName("신규 주문을 생성 할 때 이메일은 50자 이하여야 한다.")
+    @WithMockUser
     @Test
     void createOrderWhenEmailLengthIs0() throws Exception {
         OrderCreateRequest request = OrderCreateRequest.builder()
@@ -244,7 +253,7 @@ class OrderControllerTest extends ControllerTestSupport {
                     .build());
 
         mockMvc.perform(
-                post("/api/v1/orders")
+                post("/api/v1/orders").with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)
                     ))
@@ -269,6 +278,7 @@ class OrderControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 주문을 생성 할 때 주소는 필수값이다.")
+    @WithMockUser
     @Test
     void createOrderWithoutAddress() throws Exception {
         OrderCreateRequest request = OrderCreateRequest.builder()
@@ -290,7 +300,7 @@ class OrderControllerTest extends ControllerTestSupport {
 
 
         mockMvc.perform(
-                post("/api/v1/orders")
+                post("/api/v1/orders").with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)
                     ))
@@ -303,6 +313,7 @@ class OrderControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 주문을 생성 할 때 주소는 200자 이하여야 한다.")
+    @WithMockUser
     @Test
     void createOrderWhenAddressLengthIsOver200() throws Exception {
         OrderCreateRequest request = OrderCreateRequest.builder()
@@ -325,7 +336,7 @@ class OrderControllerTest extends ControllerTestSupport {
 
 
         mockMvc.perform(
-                post("/api/v1/orders")
+                post("/api/v1/orders").with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)
                     ))
@@ -338,6 +349,7 @@ class OrderControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 주문을 생성 할 때 주소는 200자 이하여야 한다.")
+    @WithMockUser
     @Test
     void createOrderWhenAddressLengthIs200() throws Exception {
         OrderCreateRequest request = OrderCreateRequest.builder()
@@ -383,7 +395,7 @@ class OrderControllerTest extends ControllerTestSupport {
                     .build());
 
         mockMvc.perform(
-                post("/api/v1/orders")
+                post("/api/v1/orders").with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)
                     ))
@@ -408,6 +420,7 @@ class OrderControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 주문을 생성 할 때 우편번호는 필수값이다.")
+    @WithMockUser
     @Test
     void createOrderWithoutPostcode() throws Exception {
         OrderCreateRequest request = OrderCreateRequest.builder()
@@ -429,7 +442,7 @@ class OrderControllerTest extends ControllerTestSupport {
 
 
         mockMvc.perform(
-                post("/api/v1/orders")
+                post("/api/v1/orders").with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)
                     ))
@@ -442,6 +455,7 @@ class OrderControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 주문을 생성 할 때 우편번호는 20자 이하여야 한다.")
+    @WithMockUser
     @Test
     void createOrderWhenPostcodeLengthIsOver20() throws Exception {
         OrderCreateRequest request = OrderCreateRequest.builder()
@@ -464,7 +478,7 @@ class OrderControllerTest extends ControllerTestSupport {
 
 
         mockMvc.perform(
-                post("/api/v1/orders")
+                post("/api/v1/orders").with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)
                     ))
@@ -477,6 +491,7 @@ class OrderControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 주문을 생성 할 때 우편번호는 20자 이하여야 한다.")
+    @WithMockUser
     @Test
     void createOrderWhenPostcodeLengthIs200() throws Exception {
         OrderCreateRequest request = OrderCreateRequest.builder()
@@ -522,7 +537,7 @@ class OrderControllerTest extends ControllerTestSupport {
                     .build());
 
         mockMvc.perform(
-                post("/api/v1/orders")
+                post("/api/v1/orders").with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)
                     ))
@@ -547,6 +562,7 @@ class OrderControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 주문을 생성 할 때 상품은 필수값이다.")
+    @WithMockUser
     @Test
     void createOrderWithoutProduct() throws Exception {
         OrderCreateRequest request = OrderCreateRequest.builder()
@@ -557,7 +573,7 @@ class OrderControllerTest extends ControllerTestSupport {
 
 
         mockMvc.perform(
-                post("/api/v1/orders")
+                post("/api/v1/orders").with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)
                     ))
@@ -570,6 +586,7 @@ class OrderControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 주문을 생성 할 때 상품ID는 필수값이다.")
+    @WithMockUser
     @Test
     void createOrderWithoutProductId() throws Exception {
         OrderCreateRequest request = OrderCreateRequest.builder()
@@ -591,7 +608,7 @@ class OrderControllerTest extends ControllerTestSupport {
 
 
         mockMvc.perform(
-                post("/api/v1/orders")
+                post("/api/v1/orders").with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)
                     ))
@@ -604,6 +621,7 @@ class OrderControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 주문을 생성 할 때 수량은 필수값이다.")
+    @WithMockUser
     @Test
     void createOrderWithoutProductQuantity() throws Exception {
         OrderCreateRequest request = OrderCreateRequest.builder()
@@ -624,7 +642,7 @@ class OrderControllerTest extends ControllerTestSupport {
 
 
         mockMvc.perform(
-                post("/api/v1/orders")
+                post("/api/v1/orders").with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)
                     ))
@@ -637,6 +655,7 @@ class OrderControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("신규 주문을 생성 할 때 상품 수량은 양의 정수이다.")
+    @WithMockUser
     @Test
     void createOrderWhenProductQuantityIsZero() throws Exception {
         OrderCreateRequest request = OrderCreateRequest.builder()
@@ -659,7 +678,7 @@ class OrderControllerTest extends ControllerTestSupport {
 
 
         mockMvc.perform(
-                post("/api/v1/orders")
+                post("/api/v1/orders").with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)
                     ))
@@ -672,6 +691,7 @@ class OrderControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("주문ID로 주문을 조회한다.")
+    @WithMockUser
     @Test
     void getOrderByOrderId() throws Exception {
 
@@ -702,7 +722,7 @@ class OrderControllerTest extends ControllerTestSupport {
                     .build());
 
         mockMvc.perform(
-                get("/api/v1/orders/{id}", 1L)
+                get("/api/v1/orders/{id}", 1L).with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
             )
             .andDo(print())
@@ -727,6 +747,7 @@ class OrderControllerTest extends ControllerTestSupport {
     }
 
     @DisplayName("이메일을 통해 주문을 조회한다.")
+    @WithMockUser
     @Test
     void getOrderByEmail() throws Exception {
         //given
@@ -758,7 +779,7 @@ class OrderControllerTest extends ControllerTestSupport {
             ));
 
         mockMvc.perform(
-                get("/api/v1/orders")
+                get("/api/v1/orders").with(csrf())
                     .param("email", email)
                     .contentType(MediaType.APPLICATION_JSON)
             )
