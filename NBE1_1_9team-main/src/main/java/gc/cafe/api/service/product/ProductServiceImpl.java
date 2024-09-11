@@ -1,6 +1,7 @@
 package gc.cafe.api.service.product;
 
 import gc.cafe.api.service.product.request.ProductCreateServiceRequest;
+import gc.cafe.api.service.product.request.ProductSearchServiceRequest;
 import gc.cafe.api.service.product.request.ProductUpdateServiceRequest;
 import gc.cafe.api.service.product.response.ProductResponse;
 import gc.cafe.domain.product.Product;
@@ -8,6 +9,8 @@ import gc.cafe.domain.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional
@@ -41,6 +44,15 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse getProduct(Long id) {
         Product product = getProductById(id);
         return ProductResponse.of(product);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<ProductResponse> getProductByNameOrCategory(ProductSearchServiceRequest request) {
+        List<Product> products = productRepository.findProductByNameOrCategory(request.getName(), request.getCategory());
+        return products.stream()
+            .map(ProductResponse::of)
+            .toList();
     }
 
     private Product getProductById(Long id) {

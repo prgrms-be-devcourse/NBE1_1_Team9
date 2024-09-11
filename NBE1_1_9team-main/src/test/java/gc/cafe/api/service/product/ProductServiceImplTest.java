@@ -2,12 +2,15 @@ package gc.cafe.api.service.product;
 
 import gc.cafe.IntegrationTestSupport;
 import gc.cafe.api.service.product.request.ProductCreateServiceRequest;
+import gc.cafe.api.service.product.request.ProductSearchServiceRequest;
 import gc.cafe.api.service.product.request.ProductUpdateServiceRequest;
 import gc.cafe.api.service.product.response.ProductResponse;
 import gc.cafe.domain.product.Product;
 import gc.cafe.domain.product.ProductRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +29,7 @@ class ProductServiceImplTest extends IntegrationTestSupport {
 
     @DisplayName("신규 상품을 등록한다.")
     @Test
-    void createProduct() {
+    void createProductTest() {
         //given
         ProductCreateServiceRequest request = ProductCreateServiceRequest.builder()
             .name("스타벅스 원두")
@@ -57,12 +60,7 @@ class ProductServiceImplTest extends IntegrationTestSupport {
     @Test
     void getProductByProductId() {
         //given
-        Product product = Product.builder()
-            .name("스타벅스 원두")
-            .category("원두")
-            .price(50000L)
-            .description("에티오피아산")
-            .build();
+        Product product = createProduct("스타벅스 원두", "원두", 50000L, "에티오피아산");
 
         Product savedProduct = productRepository.save(product);
 
@@ -93,14 +91,8 @@ class ProductServiceImplTest extends IntegrationTestSupport {
     @DisplayName("상품 ID를 통해 해당 상품을 삭제 할 수 있다.")
     @Test
     void deleteProductByProductId() {
-        //given
-
-        Product product = Product.builder()
-            .name("스타벅스 원두")
-            .category("원두")
-            .price(50000L)
-            .description("에티오피아산")
-            .build();
+        //given=
+        Product product = createProduct("스타벅스 원두", "원두", 50000L, "에티오피아산");
 
         Product savedProduct = productRepository.save(product);
 
@@ -131,12 +123,7 @@ class ProductServiceImplTest extends IntegrationTestSupport {
     @Test
     void updateProductByProductId() {
         //given
-        Product product = Product.builder()
-            .name("스타벅스 원두")
-            .category("원두")
-            .price(50000L)
-            .description("에티오피아산")
-            .build();
+        Product product = createProduct("스타벅스 원두", "원두", 50000L, "에티오피아산");
 
         Product savedProduct = productRepository.save(product);
 
@@ -174,6 +161,124 @@ class ProductServiceImplTest extends IntegrationTestSupport {
         assertThatThrownBy(() -> productService.updateProduct(productId, request))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("해당 id : " + productId + "를 가진 상품을 찾을 수 없습니다.");
+    }
+
+    @DisplayName("상품 이름 또는 카테고리로 상품을 조회한다")
+    @Test
+    void getProductByNameOrCategory() {
+        //given
+        Product product1 = createProduct("스타벅스 원두", "원두", 50000L, "에티오피아산");
+        Product product2 = createProduct("스타벅스 라떼", "음료", 3000L, "에스프레소");
+        Product product3 = createProduct("스타벅스 베이글", "베이커리", 5000L, "베이글");
+        Product product4 = createProduct("스타벅스 샌드위치", "베이커리", 4000L, "샌드위치");
+
+        productRepository.saveAll(List.of(product1, product2, product3, product4));
+
+        ProductSearchServiceRequest request = ProductSearchServiceRequest.builder()
+            .name("스타벅스")
+            .category("베이커리")
+            .build();
+
+        //when
+        List<ProductResponse> response = productService.getProductByNameOrCategory(request);
+
+        //then
+        assertThat(response).hasSize(2)
+            .extracting("name", "category", "price", "description")
+            .containsExactlyInAnyOrder(
+                tuple("스타벅스 베이글", "베이커리", 5000L, "베이글"),
+                tuple("스타벅스 샌드위치", "베이커리", 4000L, "샌드위치")
+            );
+    }
+
+    @DisplayName("상품 이름만 입력 받은 경우 이름으로 상품을 조회한다")
+    @Test
+    void getProductByNameWithoutCategory() {
+        //given
+        Product product1 = createProduct("스타벅스 원두", "원두", 50000L, "에티오피아산");
+        Product product2 = createProduct("스타벅스 라떼", "음료", 3000L, "에스프레소");
+        Product product3 = createProduct("스타벅스 베이글", "베이커리", 5000L, "베이글");
+        Product product4 = createProduct("스타벅스 샌드위치", "베이커리", 4000L, "샌드위치");
+
+        productRepository.saveAll(List.of(product1, product2, product3, product4));
+
+        ProductSearchServiceRequest request = ProductSearchServiceRequest.builder()
+            .name("스타벅스")
+            .build();
+
+        //when
+        List<ProductResponse> response = productService.getProductByNameOrCategory(request);
+
+        //then
+        assertThat(response).hasSize(4)
+            .extracting("name", "category", "price", "description")
+            .containsExactlyInAnyOrder(
+                tuple("스타벅스 베이글", "베이커리", 5000L, "베이글"),
+                tuple("스타벅스 샌드위치", "베이커리", 4000L, "샌드위치"),
+                tuple("스타벅스 원두", "원두", 50000L, "에티오피아산"),
+                tuple("스타벅스 라떼", "음료", 3000L, "에스프레소")
+            );
+    }
+
+    @DisplayName("카테고리만 입력 받은 경우 카테고리로 상품을 조회한다.")
+    @Test
+    void getProductByCategoryWithoutName() {
+        //given
+        Product product1 = createProduct("스타벅스 원두", "원두", 50000L, "에티오피아산");
+        Product product2 = createProduct("스타벅스 라떼", "음료", 3000L, "에스프레소");
+        Product product3 = createProduct("스타벅스 베이글", "베이커리", 5000L, "베이글");
+        Product product4 = createProduct("스타벅스 샌드위치", "베이커리", 4000L, "샌드위치");
+
+        productRepository.saveAll(List.of(product1, product2, product3, product4));
+
+        ProductSearchServiceRequest request = ProductSearchServiceRequest.builder()
+            .category("베이커리")
+            .build();
+
+        //when
+        List<ProductResponse> response = productService.getProductByNameOrCategory(request);
+
+        //then
+        assertThat(response).hasSize(2)
+            .extracting("name", "category", "price", "description")
+            .containsExactlyInAnyOrder(
+                tuple("스타벅스 베이글", "베이커리", 5000L, "베이글"),
+                tuple("스타벅스 샌드위치", "베이커리", 4000L, "샌드위치")
+            );
+    }
+
+    @DisplayName("이름 또는 카테고리의 검색 결과가 없는 경우 빈 리스트를 반환한다")
+    @CsvSource({"이디야, 텀블러", "스타벅스, 텀블러", "이디야, 커피"," , 텀블러", "이디야,  "})
+    @ParameterizedTest
+    void getProductByNameAndCategoryIsNotFound (String name,String category) {
+        //given
+        Product product1 = createProduct("스타벅스 원두", "원두", 50000L, "에티오피아산");
+        Product product2 = createProduct("스타벅스 라떼", "음료", 3000L, "에스프레소");
+        Product product3 = createProduct("스타벅스 베이글", "베이커리", 5000L, "베이글");
+        Product product4 = createProduct("스타벅스 샌드위치", "베이커리", 4000L, "샌드위치");
+
+        productRepository.saveAll(List.of(product1, product2, product3, product4));
+
+        ProductSearchServiceRequest request = ProductSearchServiceRequest.builder()
+            .name(name)
+            .category(category)
+            .build();
+
+        //when
+        List<ProductResponse> response = productService.getProductByNameOrCategory(request);
+
+        //then
+        assertThat(response).isEmpty();
+    }
+
+
+    private Product createProduct(String name, String category, Long price, String description) {
+        return Product.builder()
+            .name(name)
+            .category(category)
+            .price(price)
+            .description(description)
+            .build();
     }
 
 }
