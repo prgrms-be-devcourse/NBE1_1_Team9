@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -38,6 +39,7 @@ public class SecurityConfig {
                 .csrf(CsrfConfigurer<HttpSecurity>::disable)
                 .formLogin(FormLoginConfigurer<HttpSecurity>::disable)
                 .httpBasic(HttpBasicConfigurer<HttpSecurity>::disable)
+                .headers(it -> it.frameOptions(FrameOptionsConfig::sameOrigin))
                 .sessionManagement (it ->
                         it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
@@ -49,6 +51,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers("/users/**").permitAll()
+                                .requestMatchers("/h2-console").permitAll()
+                                .requestMatchers("/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
