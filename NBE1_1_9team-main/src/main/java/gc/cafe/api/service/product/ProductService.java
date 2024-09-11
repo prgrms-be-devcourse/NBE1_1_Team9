@@ -4,6 +4,8 @@ import gc.cafe.api.service.product.request.ProductCreateServiceRequest;
 import gc.cafe.api.service.product.request.ProductUpdateServiceRequest;
 import gc.cafe.api.service.product.response.ProductResponse;
 
+import java.util.List;
+
 public interface ProductService {
     ProductResponse createProduct(ProductCreateServiceRequest request);
 
@@ -12,4 +14,6 @@ public interface ProductService {
     ProductResponse updateProduct(Long id, ProductUpdateServiceRequest request);
 
     ProductResponse getProduct(Long id);
+
+    List<ProductResponse> getAllProducts();
 }
