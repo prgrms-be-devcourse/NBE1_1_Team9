@@ -5,6 +5,8 @@ import gc.cafe.api.service.user.response.EmailResponse;
 import gc.cafe.api.service.user.response.UserIdResponse;
 import gc.cafe.domain.user.User;
 import gc.cafe.domain.user.UserRepository;
+import gc.cafe.global.redis.RefreshToken;
+import gc.cafe.global.redis.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +22,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
     public UserIdResponse join(JoinServiceRequest joinRequest) {
@@ -42,13 +45,16 @@ public class UserService {
         return new EmailResponse(authentication.getName());
     }
 
-//    @Transactional
-//    public EmailResponse reIssueToken(String refreshToken) {
-//        return new EmailResponse();
-//    }
+    @Transactional
+    public EmailResponse reIssueToken(String refreshToken) {
+        RefreshToken byToken = refreshTokenRepository.findByToken(refreshToken)
+                .orElseThrow(() -> new IllegalArgumentException("그런 토큰은 없는디요."));
+        refreshTokenRepository.delete(byToken);
+        return new EmailResponse(byToken.getEmail());
+    }
 
-//    @Transactional
-//    public void logout(String email) {
-//
-//    }
+    @Transactional
+    public void logout(String email) {
+        refreshTokenRepository.deleteById(email);
+    }
 }

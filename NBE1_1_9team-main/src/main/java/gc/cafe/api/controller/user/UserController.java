@@ -39,15 +39,15 @@ public class UserController {
     @PostMapping("/logout")
     public ApiResponse<Void> logout() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-//        userService.logout(email);
+        userService.logout(email);
         SecurityContextHolder.clearContext();
         return ApiResponse.ok(null);
     }
 
-//    @PostMapping("/reissue")
-//    public ApiResponse<TokenResponse> reIssueToken(@RequestParam("refreshToken") String refreshToken) {
-//        UserEmailVO email =userService.reIssueToken(refreshToken);
-//        return new ApiResponse<>(jwtService.toTokenResponse(email.value()));
-//    }
+    @PostMapping("/reissue")
+    public ApiResponse<TokenResponse> reIssueToken(@RequestParam("refreshToken") String refreshToken) {
+        EmailResponse email = userService.reIssueToken(refreshToken);
+        return ApiResponse.ok(jwtService.toTokenResponse(email.getValue()));
+    }
 
 }

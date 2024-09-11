@@ -7,6 +7,7 @@ import gc.cafe.global.dto.TokenResponse;
 import gc.cafe.domain.user.User;
 import gc.cafe.domain.user.UserRepository;
 import gc.cafe.global.auth.login.LoginService;
+import gc.cafe.global.event.RefreshTokenEvent;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +47,7 @@ public class JwtService {
                 .orElseThrow(() -> new IllegalArgumentException("3번 후보"));
         String accessToken = makeAccessToken(user.getEmail());
         String refreshToken = makeRefreshToken();
-//        publisher.publishEvent(new RedisEvent(user.getEmail(), refreshToken));
+        publisher.publishEvent(new RefreshTokenEvent(user.getEmail(), refreshToken));
         return new TokenResponse(accessToken, refreshToken);
     }
 
