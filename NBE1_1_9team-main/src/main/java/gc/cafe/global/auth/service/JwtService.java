@@ -47,7 +47,7 @@ public class JwtService {
         String accessToken = makeAccessToken(user.getEmail());
         String refreshToken = makeRefreshToken();
 //        publisher.publishEvent(new RedisEvent(user.getEmail(), refreshToken));
-        return new TokenResponse(accessToken, refreshToken, user.getName(), user.getId());
+        return new TokenResponse(accessToken, refreshToken);
     }
 
     private String makeAccessToken(String email) {
