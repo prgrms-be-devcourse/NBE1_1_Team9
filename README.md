@@ -369,6 +369,8 @@ PR이 다음 요구 사항을 충족하는지 확인하세요.
         - PK값을 저장해 둘 수도 있지만, 토큰 생성에 email을 담기 때문에 email 값을 저장하기로 선택
 
   ### 결과
+  ![스크린샷 2024-09-11 오후 12 27 08](https://github.com/user-attachments/assets/14097adc-2c1d-41ec-a679-5384ae76504e)
+
 
     - Redis로 refreshToken의 저장 위치를 바꿔서 기존 MySQL의 부화 감소
     - key-value 방식으로 저장되기 때문에 O(1)의 시간복잡도를 가져 성능 향상
