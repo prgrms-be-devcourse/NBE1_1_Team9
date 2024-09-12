@@ -529,9 +529,8 @@ PR이 다음 요구 사항을 충족하는지 확인하세요.
     spring.mvc.hiddenmethod.filter.enabled=true
     ```
 
-  **html form 태그에서 PUT, DELETE 사용**
-
-    - [https://velog.io/@krafftdj/html-form-태그에서-PUT-DELETE-사용](https://velog.io/@krafftdj/html-form-%ED%83%9C%EA%B7%B8%EC%97%90%EC%84%9C-PUT-DELETE-%EC%82%AC%EC%9A%A9)
+  [html form 태그에서 PUT, DELETE 사용](https://velog.io/@krafftdj/html-form-태그에서-PUT-DELETE-사용)
+  ](https://velog.io/@krafftdj/html-form-%ED%83%9C%EA%B7%B8%EC%97%90%EC%84%9C-PUT-DELETE-%EC%82%AC%EC%9A%A9)
 
 ---
 
