@@ -507,9 +507,7 @@ PR이 다음 요구 사항을 충족하는지 확인하세요.
   > HTML Form에서 API요청시, GET과 POST 메서드만 사용 가능
   >
 
-  **REST - HTML Form에서 GET/POST만 지원하는 이유**
-
-    - https://haah.kr/2017/05/23/rest-http-method-in-html-form/
+  [REST - HTML Form에서 GET/POST만 지원하는 이유](https://haah.kr/2017/05/23/rest-http-method-in-html-form/)
 
   ### 해결
 
@@ -530,7 +528,6 @@ PR이 다음 요구 사항을 충족하는지 확인하세요.
     ```
 
   [html form 태그에서 PUT, DELETE 사용](https://velog.io/@krafftdj/html-form-태그에서-PUT-DELETE-사용)
-  ](https://velog.io/@krafftdj/html-form-%ED%83%9C%EA%B7%B8%EC%97%90%EC%84%9C-PUT-DELETE-%EC%82%AC%EC%9A%A9)
 
 ---
 
