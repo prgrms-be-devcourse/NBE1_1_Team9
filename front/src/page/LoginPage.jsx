@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from 'react'
+import { Link, redirect, useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import axios from '../axios/BasicAxios';
 import EmailInput from '../components/user/EmailInput';
 import PasswordInput from '../components/user/PasswordInput';
+import { UserContext } from '../context/UserContext';
 
 const StyledLoginDiv = styled.div`
     width: 30vw;
@@ -39,7 +40,9 @@ const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isFetching, setFetching] = useState(false);
+    const {setLoginUser} = useContext(UserContext);
     const navigate = useNavigate();
+
     const login = (e) => {
         e.preventDefault();
 
@@ -67,10 +70,12 @@ const LoginPage = () => {
         .then(({data}) => {
             //로그인 후 로직 저장
             console.log(data);
-            localStorage.setItem('accessToken', data.accessToken);
+            setLoginUser(data.accessToken);
             localStorage.setItem('refreshToken', data.refreshToken);
+            
             alert('로그인 성공');
-            navigate('/');
+            // 로그아웃 후 리다이렉트
+            navigate('/', { replace: true });
         })
         .catch(err => {
             alert('아이디 또는 비밀번호가 틀렸습니다.');

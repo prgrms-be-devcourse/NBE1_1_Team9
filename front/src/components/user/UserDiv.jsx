@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from '../../axios/BasicAxios';
+import { UserContext } from '../../context/UserContext';
 
 const StyledLink = styled(Link)`
     text-decoration: none;
@@ -15,6 +16,7 @@ const UserDiv = () => {
   const [isFetching, setFetching] = useState(false);
   const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
+  const {setLoginUser} = useContext(UserContext);
 
   const logout = () => {
     if(isFetching) {
@@ -23,12 +25,14 @@ const UserDiv = () => {
     }
 
     setFetching(true);
-    axios.post(`/users/logout/${userId}`)
+    axios.post(`/users/logout`)
     .then(res => {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       alert('로그아웃 완료');
-      navigate('/');
+      setLoginUser(null);
+      //리다이렉트
+      navigate('/', { redirect: true });
     })
     .finally(
       setFetching(false)

@@ -3,13 +3,17 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React, {useEffect, useState} from 'react';
 import ClientPage from './page/ClientPage';
 import { BrowserRouter } from "react-router-dom";
+import { UserProvider } from "./context/UserContext";
 
 function App() {
 
   return (
-    <BrowserRouter >
-      <ClientPage />
-    </BrowserRouter>
+    <UserProvider>
+      <BrowserRouter >
+        <ClientPage />
+      </BrowserRouter>
+    </UserProvider>
+    
   );
 }
 
