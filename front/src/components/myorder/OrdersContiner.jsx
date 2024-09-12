@@ -6,7 +6,6 @@ const StyledOrdersContiner = styled.div`
     display: flex;
     justify-content: center;
     margin-top: 1em;
-    background-color: gray;
 `;
 
 const OrdersContiner = ({ orders }) => {
