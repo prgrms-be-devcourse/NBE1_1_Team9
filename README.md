@@ -500,8 +500,6 @@ PR이 다음 요구 사항을 충족하는지 확인하세요.
 
 ### 컨트롤러의 파라미터에서 전달받은 데이터를 DTO객체로 바인딩 시 발생하는 에러 해결
 
-  [[refactor] 관리자용 상품 관리 페이지 SSR로 리팩토링 by Anyeon00 · Pull Request #12 · prgrms-be-devcourse/NBE1_1_Team9](https://github.com/prgrms-be-devcourse/NBE1_1_Team9/pull/12)
-
   ### 문제상황
 
   > form으로 상품등록 API 요청시, 상품등록DTO의 필드 값이 null이라는 검증 에러 메시지가 응답됨
@@ -518,8 +516,6 @@ PR이 다음 요구 사항을 충족하는지 확인하세요.
 >
 ### 타임리프 form 태그로 PUT, DELETE Api요청시 발생하는 에러 해결
 
-  [[refactor] 관리자용 상품 관리 페이지 SSR로 리팩토링 by Anyeon00 · Pull Request #12 · prgrms-be-devcourse/NBE1_1_Team9](https://github.com/prgrms-be-devcourse/NBE1_1_Team9/pull/12)
-
   ### 문제상황
 
   > HTML Form태그에서 PUT과 DELETE 메서드로 상품 등록과 상품 삭제 API 요청시, 콘솔 창에 허용 되지 않은 메서드라는 에러 메시지가 출력됨
@@ -530,31 +526,25 @@ PR이 다음 요구 사항을 충족하는지 확인하세요.
   > HTML Form에서 API요청시, GET과 POST 메서드만 사용 가능
   >
 
-  **REST - HTML Form에서 GET/POST만 지원하는 이유**
-
-    - https://haah.kr/2017/05/23/rest-http-method-in-html-form/
+  [REST - HTML Form에서 GET/POST만 지원하는 이유](https://haah.kr/2017/05/23/rest-http-method-in-html-form/)
 
   ### 해결
 
-  > 1.  Hidden Input 태그를 통해 PUT과 DELETE 메서드 사용
+  > 1.  Hidden Input 태그를 통해 PUT과 DELETE 메서드 사용 <br>
     2. **HiddenHttpMethodFilter 설정**
-  >
-
-    ```html
+       
+    ```
     <!-- Thymeleafe 사용시, 다음 코드를 통해 hidden input 태그를 자동 추가 -->
     <form action="#" th:action="/board/api" method="#" th:method="delete">
       ...
     </form>
     ```
-
     ```html
     # application.properties
     spring.mvc.hiddenmethod.filter.enabled=true
     ```
 
-  **html form 태그에서 PUT, DELETE 사용**
-
-    - [https://velog.io/@krafftdj/html-form-태그에서-PUT-DELETE-사용](https://velog.io/@krafftdj/html-form-%ED%83%9C%EA%B7%B8%EC%97%90%EC%84%9C-PUT-DELETE-%EC%82%AC%EC%9A%A9)
+  [html form 태그에서 PUT, DELETE 사용](https://velog.io/@krafftdj/html-form-태그에서-PUT-DELETE-사용)
 
 ---
 
