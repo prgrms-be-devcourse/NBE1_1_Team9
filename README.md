@@ -116,7 +116,9 @@ Product-OrderProduct 단방향 관계 설정
 
 - 상품과 주문상품에 대해서는 주문 상품은 상품을 알아야 하지만 상품은 주문 상품에 대해 알 필요가 없다고 여겨져서 단방향 관계로 설정하였다.
 
-### git 브랜치 전략
+--- 
+
+### Git 브랜치 전략
 
 ![image.png](https://github.com/user-attachments/assets/79a8f45f-8edc-425c-a691-aa78bb342344)
 
@@ -274,6 +276,7 @@ PR이 다음 요구 사항을 충족하는지 확인하세요.
 
 - 리뷰 시 중점적으로 봐야하는 부분
 
+---
 ## 트러블 슈팅
 
 ### Spring Security 적용시 Controller 테스트 실행 문제 해결
@@ -534,18 +537,33 @@ PR이 다음 요구 사항을 충족하는지 확인하세요.
 
     - [https://velog.io/@krafftdj/html-form-태그에서-PUT-DELETE-사용](https://velog.io/@krafftdj/html-form-%ED%83%9C%EA%B7%B8%EC%97%90%EC%84%9C-PUT-DELETE-%EC%82%AC%EC%9A%A9)
 
+---
+
 ## 개인 작업 목록
 
 [민혁 PR](https://github.com/prgrms-be-devcourse/NBE1_1_Team9/pulls?q=is:pr+is:closed+label:민혁)
 
+- QueryDsl 적용
+- Pagination 적용
+
 [준호 PR](https://github.com/prgrms-be-devcourse/NBE1_1_Team9/pulls?q=is:pr+is:closed+label:준호)
+
+- React를 통한 프론트엔드 개발
 
 [태호 PR](https://github.com/prgrms-be-devcourse/NBE1_1_Team9/pulls?q=is:pr+is:closed+label:태호)
 
+- 스프링 시큐리티 적용
+- JWT 토큰 발급 및 검증
+
 [형석 PR](https://github.com/prgrms-be-devcourse/NBE1_1_Team9/pulls?q=is:pr+is:closed+label:형석)
+
+- 타임리프를 이용한 관리자 페이지
 
 [믿음 PR](https://github.com/prgrms-be-devcourse/NBE1_1_Team9/pulls?q=is:pr+is:closed+label:믿음)
 
+- QueryDsl을 이용한 N+1 문제 해결
+
+---
 
 ## API 명세서
 
@@ -563,11 +581,15 @@ http://localhost:8080/docs/index.html
 
 ![스크린샷 2024-09-12 오전 10.24.52.png](https://github.com/user-attachments/assets/1acd06b8-8a6f-4b85-96b2-0619b98be042)
 
+---
+
 ## 테스트
 
 총 테스트 항목 82개
 
 ![스크린샷 2024-09-12 오전 10.16.23.png](https://github.com/user-attachments/assets/8befce0d-c723-4fca-9480-247b50c21bb1)
+
+
 
 ### 테스트 커버리지
 
