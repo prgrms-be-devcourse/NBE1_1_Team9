@@ -3,12 +3,12 @@ import Order from './Order'
 import styled from 'styled-components'
 
 const StyledOrders = styled.div`
-  background-color: #999999;
+  background-color: #cccccc;
 `;
 
 const Orders = ({ data }) => {
   return (
-    <StyledOrders>
+    <StyledOrders className='shadow p-3 mb-5 bg-body-tertiary rounded'>
         {
             data.map(order => 
                 <Order key={order?.id} data={order}/>
