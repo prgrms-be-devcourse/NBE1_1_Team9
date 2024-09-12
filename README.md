@@ -567,7 +567,7 @@ http://localhost:8080/docs/index.html
 
 총 테스트 항목 82개
 
-![스크린샷 2024-09-12 오전 10.16.23.png](https://github.com/user-attachments/assets/440ac075-f950-47cc-a20c-3f30ffc86d1f)
+![스크린샷 2024-09-12 오전 10.16.23.png](https://github.com/user-attachments/assets/8befce0d-c723-4fca-9480-247b50c21bb1)
 
 ### 테스트 커버리지
 
