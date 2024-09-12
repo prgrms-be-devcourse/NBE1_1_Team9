@@ -481,8 +481,6 @@ PR이 다음 요구 사항을 충족하는지 확인하세요.
 
 ### 컨트롤러의 파라미터에서 전달받은 데이터를 DTO객체로 바인딩 시 발생하는 에러 해결
 
-  [[refactor] 관리자용 상품 관리 페이지 SSR로 리팩토링 by Anyeon00 · Pull Request #12 · prgrms-be-devcourse/NBE1_1_Team9](https://github.com/prgrms-be-devcourse/NBE1_1_Team9/pull/12)
-
   ### 문제상황
 
   > form으로 상품등록 API 요청시, 상품등록DTO의 필드 값이 null이라는 검증 에러 메시지가 응답됨
@@ -498,8 +496,6 @@ PR이 다음 요구 사항을 충족하는지 확인하세요.
   > DTO클래스에 @Setter 추가
 >
 ### 타임리프 form 태그로 PUT, DELETE Api요청시 발생하는 에러 해결
-
-  [[refactor] 관리자용 상품 관리 페이지 SSR로 리팩토링 by Anyeon00 · Pull Request #12 · prgrms-be-devcourse/NBE1_1_Team9](https://github.com/prgrms-be-devcourse/NBE1_1_Team9/pull/12)
 
   ### 문제상황
 
