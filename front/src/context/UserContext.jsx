@@ -3,19 +3,31 @@ import React, { createContext, useState, useEffect } from 'react';
 // UserContext 생성
 export const UserContext = createContext();
 
+// UserProvider 컴포넌트
 export const UserProvider = ({ children }) => {
-    const [loginUser, setLoginUser] = useState(null);
+  const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        const accessToken = localStorage.getItem('accessToken');
-        if (accessToken) {
-            setLoginUser(accessToken);  // 토큰으로 로그인 상태를 설정
-        }
-    }, []);
+  // 컴포넌트가 처음 렌더링될 때 사용자 정보를 가져오는 함수
+  useEffect(() => {
+    const storedUser = localStorage.getItem("accessToken");
+    setUser(storedUser);
+  }, []);
 
-    return (
-        <UserContext.Provider value={{ loginUser, setLoginUser }}>
-            {children}
-        </UserContext.Provider>
-    );
+  const login = (data) => {
+    localStorage.setItem("accessToken", data.accessToken);
+    localStorage.setItem("accessToken", data.refreshToken);
+    setUser(data.accessToken);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    setUser(null);
+  };
+
+  return (
+    <UserContext.Provider value={{ user, login, logout }}>
+      {children}
+    </UserContext.Provider>
+  );
 };

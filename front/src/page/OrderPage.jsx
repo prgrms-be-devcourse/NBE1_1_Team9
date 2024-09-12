@@ -66,7 +66,7 @@ const OrderPage = () => {
           }).then(
             v => {
                 alert("주문이 정상적으로 접수되었습니다.")
-                setItems([]);
+                window.location.reload();
             },
             e => {
               alert("서버 장애");
