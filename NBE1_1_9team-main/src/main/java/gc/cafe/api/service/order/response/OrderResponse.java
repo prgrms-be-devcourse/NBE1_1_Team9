@@ -30,22 +30,22 @@ public class OrderResponse {
 
     public static OrderResponse of(Order order) {
         return OrderResponse.builder()
-            .id(order.getId())
-            .email(order.getEmail())
-            .address(order.getAddress().getAddress())
-            .postcode(order.getAddress().getPostcode())
-            .orderStatus(order.getOrderStatus())
-            .orderDetails(getOrderDetailResponseStream(order)
-                .toList())
-            .build();
+                .id(order.getId())
+                .email(order.getEmail())
+                .address(order.getAddress().getAddress())
+                .postcode(order.getAddress().getPostcode())
+                .orderStatus(order.getOrderStatus())
+                .orderDetails(getOrderDetailResponseStream(order)
+                        .toList())
+                .build();
     }
 
     private static Stream<OrderDetailResponse> getOrderDetailResponseStream(Order order) {
         return order.getOrderProducts().stream()
-            .map(orderProduct -> OrderDetailResponse.builder()
-                .category(orderProduct.getProduct().getCategory())
-                .price(orderProduct.getProduct().getPrice())
-                .quantity(orderProduct.getQuantity())
-                .build());
+                .map(orderProduct -> OrderDetailResponse.builder()
+                        .category(orderProduct.getProduct().getCategory())
+                        .price(orderProduct.getProduct().getPrice())
+                        .quantity(orderProduct.getQuantity())
+                        .build());
     }
 }

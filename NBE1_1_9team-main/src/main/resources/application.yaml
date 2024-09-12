@@ -16,6 +16,20 @@ spring:
     console:
       enabled: true
 
+  redis:
+    host: localhost
+    port: 6379
+    password:
+
+jwt:
+  secretKey: this-is-secret-key
+
+  access:
+    expiration: 3600000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
+
+  refresh:
+    expiration: 1209600000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루) * 14(2주))
+
 ---
 
 spring:
@@ -32,6 +46,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+
 
 ---
 
