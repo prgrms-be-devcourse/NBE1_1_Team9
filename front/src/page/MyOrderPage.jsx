@@ -31,7 +31,13 @@ const MyOrderPage = () => {
         setFetching(true);
         axios.get(`/orders?email=${email}`)
         .then(res => {
-            console.log(res);
+            if(res.status !== 200) {
+                throw res.message;
+            }
+            return res.data;
+        })
+        .then(({ data }) => {
+            setOrders(data);
         })
         .catch(err => {
             console.log(err);

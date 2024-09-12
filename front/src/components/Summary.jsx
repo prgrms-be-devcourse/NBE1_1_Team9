@@ -19,18 +19,21 @@ export function Summary({items = [], onOrderSubmit, reset}) {
   return (
     <>
       <div>
-        <h5 className="m-0 p-0"><b>Summary</b></h5>
+        <h5 className="m-0 p-0">
+          <b>Summary</b>
+          {
+            totalPrice > 0 ? <button className="btn btn-danger mx-3" onClick={() => reset()}>초기화</button> : null
+          }
+        </h5>
       </div>
       <hr/>
       {
         items.map(v => 
-          <SummaryItem key={v.productId} count={v.count} productName={v.productName}/>
+          <SummaryItem key={v.id} count={v.count} productName={v.name}/>
         )
       }
-      {
-        totalPrice > 0 ? <button className="btn btn-danger" onClick={() => reset()}>초기화</button> : null
-      }
-      <form>
+      <h5 className='text-center'>배송 정보 입력</h5>
+      <form className="mt-2">
         <div className="mb-3">
           <label htmlFor="email" className="form-label">이메일</label>
           <input type="email" className="form-control mb-1" value={order.email} onChange={handleEmailInputChanged}

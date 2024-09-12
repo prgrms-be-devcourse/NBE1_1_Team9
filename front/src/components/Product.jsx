@@ -1,8 +1,8 @@
 import React from "react";
 
 export function Product(props) {
-  const productId = props.productId;
-  const productName = props.productName;
+  const productId = props.id;
+  const productName = props.name;
   const category = props.category;
   const price = props.price;
 

@@ -16,9 +16,9 @@ const UserDiv = () => {
   const [isFetching, setFetching] = useState(false);
   const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
-  const {setLoginUser} = useContext(UserContext);
+  const { logout } = useContext(UserContext);
 
-  const logout = () => {
+  const removeToken = () => {
     if(isFetching) {
       alert('잠시만 기다려주세요.');
       return;
@@ -30,7 +30,7 @@ const UserDiv = () => {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       alert('로그아웃 완료');
-      setLoginUser(null);
+      logout();
       //리다이렉트
       navigate('/', { redirect: true });
     })
@@ -40,7 +40,7 @@ const UserDiv = () => {
   }
   return (
     <div>
-      <StyledLink onClick={() => logout()}>로그아웃</StyledLink>
+      <StyledLink onClick={() => removeToken()}>로그아웃</StyledLink>
     </div>
   )
 }

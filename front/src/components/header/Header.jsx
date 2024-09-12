@@ -45,13 +45,13 @@ const Header = () => {
                 to='/'
                 className={({ isActive }) => (isActive ? 'active' : '')}
             >
-                상품 주문하러 이동하기
+                상품 주문
             </StyledNavLink>
             <StyledNavLink 
                 to='/myOrder'
                 className={({ isActive }) => (isActive ? 'active' : '')}
             >
-                내 주문 조회하기
+                내 주문 조회
             </StyledNavLink>
         </div>
         <UserContainer/>
