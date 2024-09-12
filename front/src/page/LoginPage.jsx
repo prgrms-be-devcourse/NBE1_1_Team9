@@ -40,10 +40,10 @@ const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isFetching, setFetching] = useState(false);
-    const {setLoginUser} = useContext(UserContext);
+    const {login} = useContext(UserContext);
     const navigate = useNavigate();
 
-    const login = (e) => {
+    const getToken = (e) => {
         e.preventDefault();
 
         if(!email || !password) {
@@ -70,9 +70,7 @@ const LoginPage = () => {
         .then(({data}) => {
             //로그인 후 로직 저장
             console.log(data);
-            setLoginUser(data.accessToken);
-            localStorage.setItem('refreshToken', data.refreshToken);
-            
+            login(data);
             alert('로그인 성공');
             // 로그아웃 후 리다이렉트
             navigate('/', { replace: true });
@@ -88,7 +86,7 @@ const LoginPage = () => {
   return (
     <StyledLoginDiv>
       <h2>로그인</h2>
-      <form className='w-10' onSubmit={(e) => login(e)}>
+      <form className='w-10' onSubmit={(e) => getToken(e)}>
         <EmailInput value={email} setValue={setEmail}/>
         <PasswordInput value={password} setValue={setPassword}/>
         <button type="submit" class="btn btn-primary">로그인</button>
