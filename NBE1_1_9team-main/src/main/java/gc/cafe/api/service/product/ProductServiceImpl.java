@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional
@@ -49,6 +52,13 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse getProduct(Long id) {
         Product product = getProductById(id);
         return ProductResponse.of(product);
+    }
+
+    @Override
+    public List<ProductResponse> getAllProducts() {
+        return productRepository.findAll().stream()
+                .map(ProductResponse::of)
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)

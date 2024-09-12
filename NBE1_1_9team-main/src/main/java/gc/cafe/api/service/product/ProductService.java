@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
+import java.util.List;
+
 public interface ProductService {
     ProductResponse createProduct(ProductCreateServiceRequest request);
 
@@ -20,4 +22,6 @@ public interface ProductService {
     List<ProductResponse> getProductByNameOrCategory(ProductSearchServiceRequest request);
 
     Page<ProductResponse> getProducts(int page);
+
+    List<ProductResponse> getAllProducts();
 }

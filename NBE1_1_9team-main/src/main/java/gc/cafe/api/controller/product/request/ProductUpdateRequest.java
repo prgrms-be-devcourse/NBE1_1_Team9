@@ -6,8 +6,9 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
-@Getter
+@Getter @Setter
 public class ProductUpdateRequest {
 
     @Size(max = 20, message = "상품명은 20자 이하여야 합니다.")

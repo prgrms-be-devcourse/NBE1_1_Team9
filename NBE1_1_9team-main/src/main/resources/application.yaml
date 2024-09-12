@@ -63,3 +63,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+---
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
