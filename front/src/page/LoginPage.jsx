@@ -93,7 +93,7 @@ const LoginPage = () => {
         <PasswordInput value={password} setValue={setPassword}/>
         <button type="submit" class="btn btn-primary">로그인</button>
       </form>
-      <span>회원이 아니시라구요? <StyledLink to='/signup'>회원가입하기</StyledLink></span>
+      <span>회원이 아니신가요? <StyledLink to='/signup'>회원가입하기</StyledLink></span>
     </StyledLoginDiv>
   )
 }
