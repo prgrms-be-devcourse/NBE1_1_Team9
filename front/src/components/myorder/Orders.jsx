@@ -7,15 +7,19 @@ const StyledOrders = styled.div`
 `;
 
 const Orders = ({ data }) => {
-  return (
-    <StyledOrders className='shadow p-3 mb-5 bg-body-tertiary rounded'>
-        {
-            data.map(order => 
-                <Order key={order?.id} data={order}/>
-            )
-        }
-    </StyledOrders>
-  )
+
+  if(data.length > 0) {
+    return (
+    
+      <StyledOrders className='shadow p-3 mb-5 bg-body-tertiary rounded'>
+          {
+              data.map(order => 
+                  <Order key={order?.id} data={order}/>
+              )
+          }
+      </StyledOrders>
+    )
+  } else return null;
 }
 
 export default Orders
