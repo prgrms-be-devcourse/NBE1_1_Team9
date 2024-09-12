@@ -533,16 +533,16 @@ PR이 다음 요구 사항을 충족하는지 확인하세요.
   > 1.  Hidden Input 태그를 통해 PUT과 DELETE 메서드 사용 <br>
     2. **HiddenHttpMethodFilter 설정**
        
-    ```
+```
     <!-- Thymeleafe 사용시, 다음 코드를 통해 hidden input 태그를 자동 추가 -->
     <form action="#" th:action="/board/api" method="#" th:method="delete">
       ...
     </form>
-    ```
-    ```html
+```
+```
     # application.properties
     spring.mvc.hiddenmethod.filter.enabled=true
-    ```
+```
 
   [html form 태그에서 PUT, DELETE 사용](https://velog.io/@krafftdj/html-form-태그에서-PUT-DELETE-사용)
 
